@@ -172,7 +172,7 @@ function CalendarView({data,onCancel}){
           </tbody>
         </table>
         {/* Scrollable body with matching grid */}
-        <div style={{maxHeight:'calc(100vh - 260px)',overflowY:'auto'}}>
+        <div>
           {hours.map(h=><div key={h} style={{display:'flex',minHeight:46,borderBottom:'1px solid var(--border)'}}>
             <div style={{width:60,flexShrink:0,padding:'4px 8px',fontSize:11,color:'var(--text3)',fontWeight:500,borderRight:'1px solid var(--border)',textAlign:'right',paddingRight:10,paddingTop:4}}>{h}</div>
             {days.map(d=>{
