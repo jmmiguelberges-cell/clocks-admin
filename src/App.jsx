@@ -173,21 +173,16 @@ function CalendarView({data,onCancel}){
         </table>
         {/* Scrollable body with matching grid */}
         <div>
-          {hours.map(h=><div key={h} style={{display:'flex',minHeight:46,borderBottom:'1px solid var(--border)'}}>
-            <div style={{width:60,flexShrink:0,padding:'4px 8px',fontSize:11,color:'var(--text3)',fontWeight:500,borderRight:'1px solid var(--border)',textAlign:'right',paddingRight:10,paddingTop:4}}>{h}</div>
-            {days.map(d=>{
-              const dk=toK(d)
-              const slotA=appts.filter(a=>a.appointment_date===dk&&a.status==='confirmed'&&a.appointment_time?.slice(0,5)===h)
-              const slotB=blocks.filter(b=>b.blocked_date===dk&&b.start_time?.slice(0,5)<=h&&b.end_time?.slice(0,5)>h)
-              return<div key={dk+h} style={{flex:1,borderRight:'1px solid var(--border)',padding:2,background:isT(d)?'rgba(0,180,180,0.015)':'transparent',minWidth:0}}>
-                {slotB.length>0&&<div style={{background:'var(--red-bg)',borderRadius:3,padding:'2px 4px',fontSize:10,color:'var(--red)',fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>🚫 Bloqueado</div>}
-                {slotA.map(a=>{
-                  const sv=services.find(s=>s.id===a.service_id);const st=stylists.find(s=>s.id===a.stylist_id);const pr=profiles[a.user_id]
-                  const idx=stylists.findIndex(s=>s.id===a.stylist_id);const col=stColors[idx%stColors.length]
-                  return<div key={a.id} onClick={()=>setSelAppt(a)} style={{background:`${col}12`,borderLeft:`3px solid ${col}`,borderRadius:3,padding:'2px 5px',marginBottom:1,cursor:'pointer',overflow:'hidden'}}>
-                    <div style={{fontSize:11,fontWeight:600,color:col,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{pr?.full_name||'—'}</div>
-                    <div style={{fontSize:10,color:'var(--text3)',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{sv?.name}</div>
-                  </div>
+        {/* Header */}
+        <div style={{display:'flex',borderBottom:'1px solid var(--border)'}}>
+          <div style={{width:60,flexShrink:0,padding:'12px 8px',borderRight:'1px solid var(--border)',background:'var(--bg)'}}/>
+          {days.map(d=><div key={toK(d)} style={{flex:1,padding:'12px 8px',textAlign:'center',borderRight:'1px solid var(--border)',background:isT(d)?'var(--teal-bg)':'var(--bg)'}}>
+            <div style={{fontSize:11,fontWeight:600,color:'var(--text3)',textTransform:'uppercase'}}>{DL[(d.getDay()+6)%7]}</div>
+            <div style={{fontSize:18,fontWeight:isT(d)?800:600,color:isT(d)?'var(--teal)':'var(--text)',marginTop:2}}>{d.getDate()}</div>
+          </div>)}
+        </div>
+        {/* Rows */}
+        <div>
                 })}
               </div>
             })}
